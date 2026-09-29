@@ -3,21 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Traffic Light</title>
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #222;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            color: white;
+            margin-bottom: 25px;
+        }
+
+        .traffic-light {
+            width: 120px;
+            padding: 20px;
+            background-color: #111;
+            border-radius: 20px;
+            box-shadow: 0 0 20px #000;
+        }
+
+        .light {
+            width: 80px;
+            height: 80px;
+            margin: 15px auto;
+            border-radius: 50%;
+            background-color: #333;
+        }
+
+        #red {
+            background-color: #330000;
+        }
+
+        #yellow {
+            background-color: #333300;
+        }
+
+        #green {
+            background-color: #003300;
+        }
+
+        button {
+            margin-top: 25px;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            background-color: #007bff;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #status {
+            color: white;
+            font-size: 20px;
+            margin-top: 15px;
+        }
+    </style>
 </head>
+
 <body>
-        <div id="traffic-light">
-        <div class="light" id ="red"></div>
-        <div class="light" id ="yellow"></div>
-        <div class="light" id ="green"></div>
+
+    <h1>Traffic Light</h1>
+
+    <div class="traffic-light">
+        <div class="light" id="red"></div>
+        <div class="light" id="yellow"></div>
+        <div class="light" id="green"></div>
     </div>
 
-<div class ="buttons">
-        <button id="redBtn">Red</button>
-        <button id="yellowBtn">Yellow</button>
-        <button id="greenBtn">Green</button>
-    </div>
-    <script src="index.js"></script>
+    <div id="status">RED</div>
+
+    <button onclick="changeLight()">Change Light</button>
+
+    <script>
+        let currentLight = 0;
+
+        const lights = [
+            {
+                name: "RED",
+                color: "#ff0000",
+                id: "red"
+            },
+            {
+                name: "YELLOW",
+                color: "#ffff00",
+                id: "yellow"
+            },
+            {
+                name: "GREEN",
+                color: "#00ff00",
+                id: "green"
+            }
+        ];
+
+        function changeLight() {
+            // Turn all lights off
+            document.getElementById("red").style.backgroundColor = "#330000";
+            document.getElementById("yellow").style.backgroundColor = "#333300";
+            document.getElementById("green").style.backgroundColor = "#003300";
+
+            // Turn current light on
+            const light = lights[currentLight];
+
+            document.getElementById(light.id).style.backgroundColor = light.color;
+            document.getElementById("status").textContent = light.name;
+
+            // Move to next light
+            currentLight++;
+
+            if (currentLight >= lights.length) {
+                currentLight = 0;
+            }
+        }
+
+        // Start with red light
+        changeLight();
+
+        // Automatically change every 3 seconds
+        setInterval(changeLight, 3000);
+    </script>
+
 </body>
 </html>
